@@ -55,14 +55,14 @@ public class Main
         {
             double binomialAcc = 0;
             double leftistAcc = 0;
+
+            // From the instructions: 5000 random operations to perform on the heaps
+            List<Instruction> instructions = RandomListGen.randomInstructions(5000, size);
             
             for (int j = 0; j < numRuns; j++)
             {
                 // From the instructions: Generate a random permutation of 0 to n-1
                 List<Integer> items = RandomListGen.randomIntegerPermutation(size);
-
-                // From the instructions: 5000 random operations to perform on the heaps
-                List<Instruction> instructions = RandomListGen.randomInstructions(5000, size);
 
                 Heap heap = new BinomialHeap();
                 fillHeap(heap, items);
