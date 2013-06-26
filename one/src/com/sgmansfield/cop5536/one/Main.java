@@ -62,19 +62,20 @@ public class Main
                 List<Integer> items = RandomListGen.randomIntegerPermutation(size);
 
                 // From the instructions: 5000 random operations to perform on the heaps
-                // TODO: Restore real instructions list
-                //List<Instruction> instructions = RandomListGen.randomInstructions(5000, size);
-                List<Instruction> instructions = RandomListGen.randomInstructions(1000000, size);
+                List<Instruction> instructions = RandomListGen.randomInstructions(5000, size);
 
-                /*Heap heap = new BinomialHeap();
+                Heap heap = new BinomialHeap();
                 fillHeap(heap, items);
-                long binomialTime = timeInstructions(heap, instructions);
-                System.out.println("Binomial heap time:     " + binomialTime/1000000 + "ms");*/
+                binomialAcc += timeInstructions(heap, instructions);
 
-                Heap heap = new LeftistTreeHeap();
+                heap = new LeftistTreeHeap();
                 fillHeap(heap, items);
                 leftistAcc += timeInstructions(heap, instructions);
             }
+            
+            binomialAcc = binomialAcc / numRuns;
+            double binomialAvgTimeMs = binomialAcc / 1000000.0;
+            System.out.println("Binomial heap average time for size " + size + ": " + binomialAvgTimeMs + " ms");
             
             leftistAcc = leftistAcc / numRuns;
             double leftistAvgTimeMs = leftistAcc / 1000000.0;
