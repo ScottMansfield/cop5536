@@ -12,6 +12,11 @@ public class BinomialNode
     {
         return data;
     }
+
+    public void setData(int data)
+    {
+        this.data = data;
+    }
     
     private int degree;
 
