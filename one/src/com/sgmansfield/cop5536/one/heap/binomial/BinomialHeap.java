@@ -27,6 +27,11 @@ public class BinomialHeap implements Heap
             newNode.setNext(minNode.getNext());
             minNode.setNext(newNode);
         }
+        
+        if (newNode.getData() < minNode.getData())
+        {
+            minNode = newNode;
+        }
     }
 
     @Override
@@ -101,36 +106,36 @@ public class BinomialHeap implements Heap
             lastChild.setNext(nodeAfterInsertedSection);
         }
         
+        // to hold the trees while combining them. Maps degree to tree root.
         Map<Integer, BinomialNode> nodes = new HashMap<>();
         
         // merge trees here. Make sure to keep a reference to the original node
         // to prevent an infinite loop
         BinomialNode originalNode = minNode;
-        
         BinomialNode currentNode = minNode.getNext();
         
         // run through the list and merge all of the possible trees together
-        // TODO: FIX THIS LOGIC. The node that is beign combind should not be currentNode
-        // it should be tracked separately.
         while (currentNode != originalNode)
         {
-            while (nodes.containsKey(currentNode.getDegree()))
+            BinomialNode combineRoot = currentNode.clone();
+            
+            while (nodes.containsKey(combineRoot.getDegree()))
             {
-                BinomialNode otherNode = nodes.get(currentNode.getDegree());
+                BinomialNode otherNode = nodes.remove(combineRoot.getDegree());
                 
                 BinomialNode master = null;
                 BinomialNode slave = null;
                 
                 // Figure out the parent node and the child node
-                if (currentNode.getData() > otherNode.getData())
+                if (combineRoot.getData() > otherNode.getData())
                 {
-                    master = currentNode;
+                    master = combineRoot;
                     slave = otherNode;
                 }
                 else
                 {
                     master = otherNode;
-                    slave = currentNode;
+                    slave = combineRoot;
                 }
                 
                 // insert node into the child list
@@ -151,13 +156,51 @@ public class BinomialHeap implements Heap
                 
                 // Increase the degree since another child tree was just added
                 master.setDegree(master.getDegree() + 1);
+                
+                // reset for the loop condition
+                combineRoot = master;
             }
             
-            nodes.put(currentNode.getDegree(), currentNode);
+            nodes.put(combineRoot.getDegree(), combineRoot);
+            
+            currentNode = currentNode.getNext(); 
         }
         
         // iterate over the hashmap and serialize to a list
         //   while maintaining a min to use as the minNode element.
+        
+        minNode = null;
+        BinomialNode list = null;
+        
+        for (Map.Entry<Integer, BinomialNode> entry : nodes.entrySet())
+        {
+            BinomialNode value = entry.getValue();
+            
+            // the start of the process
+            if (list == null)
+            {
+                // Set up a one element list and base the minNode
+                list = value;
+                list.setNext(list);
+                
+                minNode = list;
+                
+                continue;
+            }
+            
+            // this is not the first time around.
+            // insert the element into the list and update minNode if necessary
+            value.setNext(list.getNext());
+            list.setNext(value);
+            
+            if (value.getData() < minNode.getData())
+            {
+                minNode = value;
+            }
+        }
+        
+        // trees are combined and the minNode has been set. Time to return the
+        // value retrieved at the very beginning.
         
         return retval;
     }

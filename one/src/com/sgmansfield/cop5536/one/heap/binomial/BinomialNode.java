@@ -61,4 +61,10 @@ public class BinomialNode
         this.next = next;
         this.child = child;
     }
+    
+    @Override
+    public BinomialNode clone()
+    {
+        return new BinomialNode(this.getData(), this.getDegree(), this.getNext(), this.getChild());
+    }
 }
