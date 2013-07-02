@@ -49,7 +49,7 @@ public class Main
         
         // From the instructions: Run at least 5 times to get an average.
         // might as well make it 10
-        int numRuns = 100;
+        int numRuns = 10;
 
         for (int size : sizes)
         {
