@@ -28,6 +28,11 @@ public class FileParser
                 continue;
             }
             
+            if (next.equals("*"))
+            {
+                break;
+            }
+            
             String[] parts = next.split(" ");
             
             if (parts[0].equals("D"))
