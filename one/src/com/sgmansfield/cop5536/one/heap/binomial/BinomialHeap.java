@@ -11,12 +11,12 @@ import java.util.Map;
 public class BinomialHeap implements Heap
 {
     private BinomialNode minNode = null;
-    
+
     @Override
     public void insert(int num)
     {
         BinomialNode newNode = new BinomialNode(num, 0, null, null);
-        
+
         if (minNode == null)
         {
             minNode = newNode;
@@ -27,7 +27,7 @@ public class BinomialHeap implements Heap
             newNode.setNext(minNode.getNext());
             minNode.setNext(newNode);
         }
-        
+
         if (newNode.getData() < minNode.getData())
         {
             minNode = newNode;
@@ -41,9 +41,9 @@ public class BinomialHeap implements Heap
         {
             return -1;
         }
-        
+
         int retval = minNode.getData();
-        
+
         // A couple of special cases:
         // 1) The minNode is the only node
         // 2) The minNode is the only top-level node, so its children become the
@@ -61,73 +61,73 @@ public class BinomialHeap implements Heap
                 minNode = minNode.getChild();
                 BinomialNode start = minNode;
                 BinomialNode current = start.getNext();
-                
+
                 while (current != start)
                 {
                     if (current.getData() < minNode.getData())
                     {
                         minNode = current;
                     }
-                    
+
                     current = current.getNext();
                 }
             }
-            
+
             return retval;
         }
-        
+
         // And now the general case where there are multiple nodes in the main
         // linked list that all potentially have children.
         // take the min node out and insert the linked list of children
         // into the main loop
-        
+
         // This will insert the children of minNode into the main top-level list
         if (minNode.getChild() != null)
         {
             // get the ends of the child list
             BinomialNode firstChild = minNode.getChild();
             BinomialNode lastChild = minNode.getChild().getNext();
-            
+
             while (lastChild.getNext() != firstChild)
             {
                 lastChild = lastChild.getNext();
             }
-            
+
             // insert the list into the main list
             BinomialNode nodeAfterInsertedSection = minNode.getNext();
-            
+
             // by first copying data over the minNode values
             minNode.setChild(firstChild.getChild());
             minNode.setData(firstChild.getData());
             minNode.setDegree(firstChild.getDegree());
             minNode.setNext(firstChild.getNext());
-            
+
             // then connecting the last child to the previous next node
             lastChild.setNext(nodeAfterInsertedSection);
         }
-        
+
         // to hold the trees while combining them. Maps degree to tree root.
         Map<Integer, BinomialNode> nodes = new HashMap<>();
-        
+
         // merge trees here. Make sure to keep a reference to the original node
         // to prevent an infinite loop
         BinomialNode originalNode = minNode;
         BinomialNode currentNode = minNode.getNext();
-        
+
         // run through the list and merge all of the possible trees together
         while (currentNode != originalNode)
         {
             BinomialNode combineRoot = currentNode.clone();
-            
+
             while (nodes.containsKey(combineRoot.getDegree()))
             {
                 BinomialNode otherNode = nodes.remove(combineRoot.getDegree());
-                
+
                 BinomialNode master = null;
                 BinomialNode slave = null;
-                
+
                 // Figure out the parent node and the child node
-                if (combineRoot.getData() > otherNode.getData())
+                if (combineRoot.getData() < otherNode.getData())
                 {
                     master = combineRoot;
                     slave = otherNode;
@@ -137,7 +137,7 @@ public class BinomialHeap implements Heap
                     master = otherNode;
                     slave = combineRoot;
                 }
-                
+
                 // insert node into the child list
                 // If null, the one node is the entire child list
                 if (master.getChild() == null)
@@ -153,55 +153,65 @@ public class BinomialHeap implements Heap
                     slave.setNext(child.getNext());
                     child.setNext(slave);
                 }
-                
+
                 // Increase the degree since another child tree was just added
                 master.setDegree(master.getDegree() + 1);
-                
+
                 // reset for the loop condition
                 combineRoot = master;
             }
-            
+
             nodes.put(combineRoot.getDegree(), combineRoot);
-            
-            currentNode = currentNode.getNext(); 
+
+            currentNode = currentNode.getNext();
         }
-        
+
         // iterate over the hashmap and serialize to a list
         //   while maintaining a min to use as the minNode element.
-        
+
         minNode = null;
         BinomialNode list = null;
-        
+
         for (Map.Entry<Integer, BinomialNode> entry : nodes.entrySet())
         {
             BinomialNode value = entry.getValue();
-            
+
             // the start of the process
             if (list == null)
             {
                 // Set up a one element list and base the minNode
                 list = value;
                 list.setNext(list);
-                
+
                 minNode = list;
-                
+
                 continue;
             }
-            
+
             // this is not the first time around.
             // insert the element into the list and update minNode if necessary
             value.setNext(list.getNext());
             list.setNext(value);
-            
+
             if (value.getData() < minNode.getData())
             {
                 minNode = value;
             }
         }
-        
+
         // trees are combined and the minNode has been set. Time to return the
         // value retrieved at the very beginning.
-        
+
         return retval;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+
+
+
+        return sb.toString();
     }
 }
