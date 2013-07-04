@@ -108,7 +108,7 @@ public class Main
 
         Heap heap = null;
 
-        if (args[0].charAt(1) == 'b')
+        if (args[0].charAt(2) == 'b')
         {
             heap = new BinomialHeap();
         }
