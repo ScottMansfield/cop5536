@@ -32,7 +32,7 @@ public class Main
         {
             fileInputTest(args);
         }
-        // Bad args. 
+        // Bad args.
         else
         {
             printUsage();
@@ -46,7 +46,7 @@ public class Main
         // TODO: Restore real sizes array
         int[] sizes = {100, 500, 1000, 2000, 3000, 4000, 5000};
         //int[] sizes = {5};
-        
+
         // From the instructions: Run at least 5 times to get an average.
         // might as well make it 10
         int numRuns = 10;
@@ -58,7 +58,7 @@ public class Main
 
             // From the instructions: 5000 random operations to perform on the heaps
             List<Instruction> instructions = RandomListGen.randomInstructions(5000, size);
-            
+
             for (int j = 0; j < numRuns; j++)
             {
                 // From the instructions: Generate a random permutation of 0 to n-1
@@ -72,17 +72,17 @@ public class Main
                 fillHeap(heap, items);
                 leftistAcc += timeInstructions(heap, instructions);
             }
-            
+
             binomialAcc = binomialAcc / numRuns;
             double binomialAvgTimeMs = binomialAcc / 1000000.0;
             System.out.println("Binomial heap average time for size " + size + ": " + binomialAvgTimeMs + " ms");
-            
+
             leftistAcc = leftistAcc / numRuns;
             double leftistAvgTimeMs = leftistAcc / 1000000.0;
             System.out.println("Leftist Tree heap average time for size " + size + ": " + leftistAvgTimeMs + " ms");
         }
     }
-    
+
     private static void fillHeap(Heap heap, List<Integer> items)
     {
         for (Integer item : items)
@@ -94,20 +94,20 @@ public class Main
     private static double timeInstructions(Heap heap, List<Instruction> instructions)
     {
         long startTime = System.nanoTime();
-        
+
         runInstructons(instructions, heap);
-        
+
         double duration = System.nanoTime() - startTime;
-        
+
         return duration;
     }
 
     private static void fileInputTest(String[] args) throws FileNotFoundException
     {
         List<Instruction> instructions = FileParser.parseFile(args[1]);
-        
+
         Heap heap = null;
-        
+
         if (args[0].charAt(1) == 'b')
         {
             heap = new BinomialHeap();
@@ -116,8 +116,10 @@ public class Main
         {
             heap = new LeftistTreeHeap();
         }
-        
+
         runInstructons(instructions, heap);
+
+        System.out.println(heap.toString());
     }
 
     private static void runInstructons(List<Instruction> instructions, Heap heap)
