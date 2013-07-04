@@ -17,7 +17,7 @@ public class BinomialNode
     {
         this.data = data;
     }
-    
+
     private int degree;
 
     public int getDegree()
@@ -29,7 +29,7 @@ public class BinomialNode
     {
         this.degree = degree;
     }
-    
+
     private BinomialNode next;
 
     public BinomialNode getNext()
@@ -41,7 +41,7 @@ public class BinomialNode
     {
         this.next = next;
     }
-    
+
     private BinomialNode child;
 
     public BinomialNode getChild()
@@ -61,7 +61,7 @@ public class BinomialNode
         this.next = next;
         this.child = child;
     }
-    
+
     @Override
     public BinomialNode clone()
     {

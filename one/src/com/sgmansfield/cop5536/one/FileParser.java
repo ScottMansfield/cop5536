@@ -18,23 +18,23 @@ public class FileParser
     {
         List<Instruction> retval = new ArrayList<>();
         Scanner s = new Scanner(new File(fileName));
-        
+
         while (s.hasNext())
         {
             String next = s.nextLine().trim();
-            
+
             if (next.length() == 0)
             {
                 continue;
             }
-            
+
             if (next.equals("*"))
             {
                 break;
             }
-            
+
             String[] parts = next.split(" ");
-            
+
             if (parts[0].equals("D"))
             {
                 retval.add(new Instruction(Operation.DELETEMIN, 0));
@@ -45,7 +45,7 @@ public class FileParser
                 retval.add(new Instruction(Operation.INSERT, num));
             }
         }
-        
+
         return retval;
     }
 }
