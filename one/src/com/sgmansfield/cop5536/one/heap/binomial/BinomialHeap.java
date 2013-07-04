@@ -3,6 +3,8 @@ package com.sgmansfield.cop5536.one.heap.binomial;
 import com.sgmansfield.cop5536.one.heap.Heap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  *
@@ -210,7 +212,55 @@ public class BinomialHeap implements Heap
     {
         StringBuilder sb = new StringBuilder();
 
+        sb.append("(BinomialHeap)\n");
 
+        BinomialNode sentinel = new BinomialNode(-1, -1, null, null);
+        int level = 1;
+
+        Queue<BinomialNode> q = new LinkedBlockingQueue<>();
+        BinomialNode currentNode = null;
+        boolean first = true;
+
+        q.add(minNode);
+        q.add(sentinel);
+
+        while (!(q.peek() == sentinel))
+        {
+            sb.append("Level ").append(level).append(": [");
+
+            first = true;
+
+            while ((currentNode = q.remove()) != sentinel)
+            {
+                BinomialNode firstNode = currentNode;
+                BinomialNode loopNode = currentNode;
+
+                do
+                {
+                    if (!first)
+                    {
+                        sb.append(", ");
+                    }
+
+                    first = false;
+
+                    sb.append(loopNode.getData());
+
+                    if (loopNode.getChild() != null)
+                    {
+                        q.add(loopNode.getChild());
+                    }
+
+                    loopNode = loopNode.getNext();
+                }
+                while (loopNode != firstNode);
+            }
+
+            sb.append("]\n");
+
+            q.add(sentinel);
+            level++;
+        }
 
         return sb.toString();
     }

@@ -111,6 +111,8 @@ public class LeftistTreeHeap implements Heap
     {
         StringBuilder sb = new StringBuilder();
 
+        sb.append("(LeftistTree)\n");
+
         LeftistNode sentinel = new LeftistNode(-1, null, null, -1);
         int level = 1;
 
