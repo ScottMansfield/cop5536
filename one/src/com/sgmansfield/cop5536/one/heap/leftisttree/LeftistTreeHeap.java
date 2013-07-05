@@ -5,6 +5,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
+ * Implements the {@link Heap} interface using a Leftist Tree
  *
  * @author Scott
  */
@@ -113,9 +114,11 @@ public class LeftistTreeHeap implements Heap
 
         sb.append("(LeftistTree)\n");
 
+        // The sentinel node signals the end of a layer when it is dequeued
         LeftistNode sentinel = new LeftistNode(-1, null, null, -1);
         int level = 1;
 
+        // Java doesn't have a "regular" queue... /sigh
         Queue<LeftistNode> q = new LinkedBlockingQueue<>();
         LeftistNode currentNode = null;
         boolean first = true;
@@ -123,12 +126,15 @@ public class LeftistTreeHeap implements Heap
         q.add(root);
         q.add(sentinel);
 
+        // This condition implies no child nodes were enqueued in the last round
         while (!(q.peek() == sentinel))
         {
             sb.append("Level ").append(level).append(": [");
 
+            // The first node printed is NOT preceeded by a comma
             first = true;
 
+            // Keep dequeueing until the level is over
             while ((currentNode = q.remove()) != sentinel)
             {
                 if (!first)
@@ -138,8 +144,10 @@ public class LeftistTreeHeap implements Heap
 
                 first = false;
 
+                // Add the current data to the output
                 sb.append(currentNode.getData());
 
+                // Then add the children
                 if (currentNode.getLeft() != null)
                 {
                     q.add(currentNode.getLeft());
@@ -151,8 +159,10 @@ public class LeftistTreeHeap implements Heap
                 }
             }
 
+            // End the line
             sb.append("]\n");
 
+            // Make sure to maintain the level and enqueue the sentinel again
             q.add(sentinel);
             level++;
         }

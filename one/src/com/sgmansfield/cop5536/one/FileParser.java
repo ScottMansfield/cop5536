@@ -9,11 +9,28 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * Parses a file, returning a list of instructions.
  *
  * @author Scott
  */
 public class FileParser
 {
+    /**
+     * Parses the given file and returns a list of instructions from it.
+     *
+     * <p>
+     *     The file has three types of lines in these formats:
+     *     <ol>
+     *         <li>Insert instructions: <code>I ###</code></li>
+     *         <li>Delete Min instructions: <code>D</code></li>
+     *         <li>End of instructions: <code>*</code></li>
+     *     </ol>
+     * </p>
+     *
+     * @param fileName The name of the file to parse
+     * @return A list of {@link Instruction}s parsed from the file
+     * @throws FileNotFoundException when the file does not exist
+     */
     public static List<Instruction> parseFile(String fileName) throws FileNotFoundException
     {
         List<Instruction> retval = new ArrayList<>();
@@ -23,11 +40,13 @@ public class FileParser
         {
             String next = s.nextLine().trim();
 
+            // Empty lines are OK
             if (next.length() == 0)
             {
                 continue;
             }
 
+            // End of instructions! stop parsing.
             if (next.equals("*"))
             {
                 break;
@@ -41,6 +60,7 @@ public class FileParser
             }
             else
             {
+                // Let any parsing exceptions bubble up since it's user input.
                 int num = Integer.valueOf(parts[1]);
                 retval.add(new Instruction(Operation.INSERT, num));
             }

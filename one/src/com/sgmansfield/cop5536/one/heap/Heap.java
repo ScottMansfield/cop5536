@@ -1,6 +1,7 @@
 package com.sgmansfield.cop5536.one.heap;
 
 /**
+ * Defines a minimal interface for a min heap.
  *
  * @author Scott
  */
@@ -16,7 +17,7 @@ public interface Heap
     /**
      * Removes and returns the minimum element from the heap
      *
-     * @return the minimum number as of the moment before this function is called
+     * @return Null if the heap is empty, the minimum number as of the moment before this function is called otherwise.
      */
     public Integer deleteMin();
 }

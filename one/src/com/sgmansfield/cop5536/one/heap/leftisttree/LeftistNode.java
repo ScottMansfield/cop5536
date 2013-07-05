@@ -1,13 +1,14 @@
 package com.sgmansfield.cop5536.one.heap.leftisttree;
 
 /**
+ * Represents one node in a Leftist Tree
  *
  * @author Scott
  */
 public class LeftistNode
 {
     private int data;
-    
+
     /**
      * Gets the data value for this node
      *
@@ -17,12 +18,12 @@ public class LeftistNode
     {
         return data;
     }
-    
+
     private LeftistNode right;
-    
+
     /**
      * Retrieves the right child node of this node.
-     * 
+     *
      * @return the right child
      */
     public LeftistNode getRight()
@@ -41,7 +42,7 @@ public class LeftistNode
     }
 
     private LeftistNode left;
-    
+
     /**
      * Retrieves the left child node of this node.
      *
@@ -63,7 +64,7 @@ public class LeftistNode
     }
 
     private int rightDistance;
-    
+
     /**
      * The distance (going to the right only) to an external node.
      *

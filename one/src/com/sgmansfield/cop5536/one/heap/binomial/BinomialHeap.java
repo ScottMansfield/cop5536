@@ -7,6 +7,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
+ * Implements the {@link Heap} interface using a Binomial Heap structure
  *
  * @author Scott
  */
@@ -214,29 +215,37 @@ public class BinomialHeap implements Heap
 
         sb.append("(BinomialHeap)\n");
 
+        // Thee sentinel node marks the end of a level
         BinomialNode sentinel = new BinomialNode(-1, -1, null, null);
         int level = 1;
 
+        // java doesnt have a "regular" queue so we have to use this rediculous one
         Queue<BinomialNode> q = new LinkedBlockingQueue<>();
         BinomialNode currentNode = null;
         boolean first = true;
 
+        // seed the queue
         q.add(minNode);
         q.add(sentinel);
 
+        // While no new nodes were added in the last round
         while (!(q.peek() == sentinel))
         {
             sb.append("Level ").append(level).append(": [");
 
             first = true;
 
+            // Keep going until the level is cleared
             while ((currentNode = q.remove()) != sentinel)
             {
                 BinomialNode firstNode = currentNode;
                 BinomialNode loopNode = currentNode;
 
+                // Each nodes is potentially a linked list of many nodes
+                // So we need a while loop to traverse the list
                 do
                 {
+                    // the first value printed per level is NOT preceeded by a comma
                     if (!first)
                     {
                         sb.append(", ");
@@ -244,20 +253,25 @@ public class BinomialHeap implements Heap
 
                     first = false;
 
+                    // Add the data to the output
                     sb.append(loopNode.getData());
 
+                    // Add the child if there is one
                     if (loopNode.getChild() != null)
                     {
                         q.add(loopNode.getChild());
                     }
 
+                    // maintain loop variables
                     loopNode = loopNode.getNext();
                 }
+                // loop until we get back to the start
                 while (loopNode != firstNode);
             }
 
             sb.append("]\n");
 
+            // Make sure to add the sentinel back in and maintain the level
             q.add(sentinel);
             level++;
         }
