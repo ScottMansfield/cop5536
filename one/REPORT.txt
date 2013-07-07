@@ -165,4 +165,41 @@ even if it is bounded by log(n) for delete-min amortized.
 The list of packages, classes, and functions is in the answer for question 2. I
 will refer to that answer in this one, where I explain the purpose of each component.
 
-lol
+The full documentation can be found in the code comments or the generated javadoc.
+
+There are four main packages:
+
+com.sgmansfield.cop5536.one
+    contains the entry point and main application logic. The classes here are used
+    to run the program and do things like list generation and file parsing. The main
+    application generally codes to the Heap interface provided by the heap package
+    and only drops down to the implementations during instantiation. This allows
+    for the best comparison since the code to perform operations is identical for
+    both heap implementations. The Main class contains pretty much all of the logic
+    in static methods because, frankly, it was easier to do so. The methods are
+    not used elsewhere but are marked public so the javadoc mechanism will pick
+    them up and produce documentation for them.
+
+com.sgmansfield.cop5536.one.heap
+    contains the heap interface, the Instruction class, and Operation enum that
+    relate to heaps in general. These are used by the main application logic to
+    generate and run sets of instructions on the heaps. The Heap interface defines
+    what the heap implementations look like to the main application. It should be
+    noted that the interface Heap and enum Operation assume a min heap implementation
+    since the project was to implement min heaps. This would not serve as a generic
+    heap interface if an implementation was a max heap. The nodes for the individual
+    heap implementations are in their respective packages because
+    1) Internal elements of a heap should not be a part of the interface.
+    2) They are different for each kind of heap.
+
+com.sgmansfield.cop5536.one.heap.binomial
+    contains the Binomial Heap implementation of the Heap interface. The BinomialHeap
+    class contains the logic to implement the Heap operations as well as the logic
+    to print the heap to a string. The BinomialNode class contains the definition
+    of a node in a binomial heap.
+
+com.sgmansfield.cop5536.one.heap.leftisttreee
+    contains the Leftist Tree implementation of the Heap interface. The LeftistTreeHeap
+    class contains the logic to implement the Heap operations as well as the logic
+    to print the heap to a string. The LeftistNode class contains the definition
+    of a node in a leftist tree.
