@@ -2,7 +2,9 @@ Scott Mansfield
 UFID 1039-7813
 COP 5536 Project 1
 
+11111111111111111111111111111111111111111111111111111111111111111111111111111111
 1) State what compiler you use, how to compile, and etc.
+11111111111111111111111111111111111111111111111111111111111111111111111111111111
 
 For development, the environment was as follows:
 OS: Windows 7
@@ -16,17 +18,105 @@ the program into a jar under the dist/ directory. In addition, the standard targ
 will generate the class filed in the build/ directory and javadoc for the project
 in the dist/javadoc/ directory.
 
+The Netbeans IDE provides a generic build.xml file that did not need to be customized
+for the purposes of this project. The one provided by the IDE that contains all
+of the real logic is included in the nbproject/ folder and is just included in the
+main project build.xml.
+
+To run the program from the directory it was built (i.e. where you typed "ant")
+type something like the following:
+
+  java -jar dist/COP5536_Project_1.jar <CMD LINE ARGS>
+
+To run a random test:
+
+  java -jar dist/COP5536_Project_1.jar -r
+
+To run the instructions in the file example_instructions.txt on a Binomial Heap:
+
+  java -jar dist/COP5536_Project_1.jar -ib example_instructions.txt
+
+To run the instructions in the file example_instructions.txt on a Leftist Tree:
+
+  java -jar dist/COP5536_Project_1.jar -il example_instructions.txt
+
+
+22222222222222222222222222222222222222222222222222222222222222222222222222222222
 2) Function prototypes showing the structure of your programs.
+22222222222222222222222222222222222222222222222222222222222222222222222222222222
 
-lol
+Here I will list all of the packages, classes and interfaces within those packages,
+and the methods those classes and interfaces contain. For complete documentation,
+read the comments in the code or the generated javadoc in the dist/javadoc/ directory.
 
+Package: com.sgmansfield.cop5536.one
+    Class: FileParser
+        Method: public static List<Instruction> parseFile(String fileName) throws FileNotFoundException
+    Class: Main
+        Method: public static void main(String[] args) throws FileNotFoundException
+        Method: public static void randomTest()
+        Method: public static void fillHeap(Heap heap, List<Integer> items)
+        Method: public static double timeInstructions(Heap heap, List<Instruction> instructions)
+        Method: public static void fileInputTest(String cmdSwitch, String fileName) throws FileNotFoundException
+        Method: public static void runInstructons(List<Instruction> instructions, Heap heap)
+        Method: private static void printUsage()
+    Class: RandomListGen
+        Method: public static List<Instruction> randomInstructions(int size, int maxNum)
+        Method: public static List<Integer> randomIntegerPermutation(int size)
+        Method: private static void swap(List<Integer> numbers, int pos1, int pos2)
+Package: com.sgmansfield.cop5536.one.heap
+    Interface: Heap
+        Method: public void insert(int num)
+        Method: public Integer deleteMin()
+    Class: Instruction
+        Constructor: public Instruction(Operation operation, int number)
+        Method: public Operation getOperation()
+        Method: public int getNumber()
+    Enum: Operation
+        Members: INSERT, DELETEMIN
+Package: com.sgmansfield.cop5536.one.heap.binomial
+    Class: BinomialHeap implements Heap
+        Method: public void insert(int num) // from interface Heap
+        Method: public Integer deleteMin()  // from interface Heap
+        Method: public String toString()    // from Object
+    Class: BinomialNode
+        Constructor: public BinomialNode(int data, int degree, BinomialNode next, BinomialNode child)
+        Method: clone() // from Object
+        Method: public int getData()
+        Method: public void setData(int data)
+        Method: public int getDegree()
+        Method: public void setDegree(int degree)
+        Method: public BinomialNode getNext()
+        Method: public void setNext(BinomialNode next)
+        Method: public BinomialNode getChild()
+        Method: public void setChild(BinomialNode child)
+Package: com.sgmansfield.cop5536.one.heap.leftisttree
+    Class: LeftistNode
+        Constructor: public LeftistNode(int data, LeftistNode right, LeftistNode left, int rightDistance)
+        Method: public int getData()
+        Method: public LeftistNode getRight()
+        Method: public void setRight(LeftistNode right)
+        Method: public LeftistNode getLeft()
+        Method: public void setLeft(LeftistNode left)
+        Method: public int getRightDistance()
+        Method: public void setRightDistance(int rightDistance)
+    Class: LeftistTreeHeap implements Heap
+        Method: public void insert(int num) // from interface Heap
+        Method: public Integer deleteMin()  // from interface Heap
+        Method: public String toString()    // from Object
+
+
+33333333333333333333333333333333333333333333333333333333333333333333333333333333
 3) A summary of result comparison: You should put first your expectation of the
-   comparison before running your program: i.e. what you think about the relative
-   performance of each scheme, and why.
+3) comparison before running your program: i.e. what you think about the relative
+3) performance of each scheme, and why.
+33333333333333333333333333333333333333333333333333333333333333333333333333333333
 
 lol
 
+44444444444444444444444444444444444444444444444444444444444444444444444444444444
 4) Please include the structure of your program. List of function prototypes is not enough.
+44444444444444444444444444444444444444444444444444444444444444444444444444444444
 
 The list of packages, classes, and functions is in the answer for question 2. I
 will refer to that answer in this one, where I explain the purpose of each component.
