@@ -112,7 +112,51 @@ Package: com.sgmansfield.cop5536.one.heap.leftisttree
 3) performance of each scheme, and why.
 33333333333333333333333333333333333333333333333333333333333333333333333333333333
 
-lol
+My expectation for these two heaps prior to seeing the numbers was definitely in
+line with the reality. The Binomial Heap is much more complicated because of the
+structure of the data. Using linked lists is always a pain and it certainly caused
+several headaches along the way because of the variable management in code.
+
+In contrast, the leftist tree has a very simple binary tree structure, just augmented
+with the right distance data to allow for a lopsided tree. The concept is much easier
+to grasp and an order of magnitude easier to program.
+
+Given the binomial heap's complexity, I was a bit skeptical of the speed it would
+produce. Part of me wanted to believe that the added complexity helps over a large
+list of operations, but that side was overpowered by the argument that the structure
+is just too complex to be worth it.
+
+To link the heaps to the numbers, I see approximately 4-5 (or even 6) times more
+time taken to run operations on a binomial heap than on a leftist tree on average.
+
+On my windows laptop, a representative random run looks like the following:
+
+Binomial heap average time for size 100: 5.3081515 ms
+Leftist Tree heap average time for size 100: 1.0484044000000001 ms
+Binomial heap average time for size 500: 1.1320264 ms
+Leftist Tree heap average time for size 500: 0.3527405 ms
+Binomial heap average time for size 1000: 1.8610233 ms
+Leftist Tree heap average time for size 1000: 0.4306512 ms
+Binomial heap average time for size 2000: 2.4399996 ms
+Leftist Tree heap average time for size 2000: 0.494818 ms
+Binomial heap average time for size 3000: 2.248391 ms
+Leftist Tree heap average time for size 3000: 0.5144073 ms
+Binomial heap average time for size 4000: 2.7008178 ms
+Leftist Tree heap average time for size 4000: 0.5837956 ms
+Binomial heap average time for size 5000: 2.8162558 ms
+Leftist Tree heap average time for size 5000: 0.6097657 ms
+
+As you can see, the binomial heap is always slower. This confirms my hypothesis
+that the added complexity is not worth the effort over a leftist tree.
+
+I think the main downfall of the binomial heap is the multiple-tree structure. The
+idea of keeping these sets of trees together at the top level in a linked list just
+baffles me. It makes inserts fast, but at the cost of the next delete-min operation
+taking forever to complete. As was stated in class, the common case is that all
+values inserted into the heap are removed by the end of the program means that the
+overall time of the binomial heap is going to be higher pretty much all the time
+even if it is bounded by log(n) for delete-min amortized.
+
 
 44444444444444444444444444444444444444444444444444444444444444444444444444444444
 4) Please include the structure of your program. List of function prototypes is not enough.
