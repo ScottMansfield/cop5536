@@ -1,0 +1,34 @@
+Scott Mansfield
+UFID 1039-7813
+COP 5536 Project 1
+
+1) State what compiler you use, how to compile, and etc.
+
+For development, the environment was as follows:
+OS: Windows 7
+IDE: Netbeans IDE version 7.3.1
+Java version: 1.7.0 update 25
+
+On the CISE machines, the package contains the build.xml used to compile the program.
+
+From the directory that contains the build.xml file, simply type "ant" to compile
+the program into a jar under the dist/ directory. In addition, the standard target
+will generate the class filed in the build/ directory and javadoc for the project
+in the dist/javadoc/ directory.
+
+2) Function prototypes showing the structure of your programs.
+
+lol
+
+3) A summary of result comparison: You should put first your expectation of the
+   comparison before running your program: i.e. what you think about the relative
+   performance of each scheme, and why.
+
+lol
+
+4) Please include the structure of your program. List of function prototypes is not enough.
+
+The list of packages, classes, and functions is in the answer for question 2. I
+will refer to that answer in this one, where I explain the purpose of each component.
+
+lol
