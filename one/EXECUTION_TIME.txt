@@ -1,0 +1,59 @@
+
+Time taken to run 5000 random operations. The time is an average of 10 runs for each heap using the
+same 5000 instructions for each run on each heap for the specified size. The instructions are random
+for each size because the numbers are restricted to be in the same range as the numbers already in
+the heap.
+
+Run 1: standard acording to instructions
++------------ +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|Size         | 100       | 500       | 1000      | 2000      | 3000      | 4000      | 5000      |
++-------------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|Binomial     | 5.3081515 | 1.1320264 | 1.8610233 | 2.4399996 | 2.248391  | 0.5144073 | 2.8162558 |
++------------ +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|Leftist Tree | 1.0484044 | 0.3527405 | 0.4306512 | 0.494818  | 0.5144073 | 0.5837956 | 0.6097657 |
++------------ +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+
+Run 2: 10x the nodes.
++------------ +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|Size         | 1000      | 5000      | 10000     | 20000     | 30000     | 40000     | 50000     |
++-------------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|Binomial     | 9.3768254 | 3.4469495 | 3.4506084 | 4.164032  | 4.9747771 | 7.0555661 | 6.5038095 |
++------------ +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|Leftist Tree | 1.0706261 | 0.5996365 | 0.7244901 | 0.8571969 | 0.972323  | 1.1550517 | 1.0767838 |
++------------ +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+
+Run 3: 10x the instructions (50,000 instead of 5000)
++------------ +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|Size         | 100       | 500       | 1000      | 2000      | 3000      | 4000      | 5000      |
++-------------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|Binomial     | 11.557078 | 5.199719  | 5.1632624 | 6.207026  | 9.6132796 | 8.8870494 | 12.032039 |
++------------ +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|Leftist Tree | 4.2897336 | 2.1135864 | 2.5291554 | 3.154494  | 3.5276714 | 3.6037528 | 4.2584979 |
++------------ +-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+
+The results of this are very interesting. The general statements that can be immediately
+produced are:
+
+1) The binomial heap is slower 100% of the time.
+2) The gap between the leftist tree and the binomial heap grows with the number
+   of nodes in the structures.
+3) The multiplier to go from Leftist Tree time to Binomial Heap time gets smaller
+   as the number of instructions increases.
+
+This points to a confirmation of my expecations laid out in the REPORT file. The
+Binomial Heap is slower because of its complexity.
+
+There is one oddity that is consistent across all test runs that stands out: the
+first runs (with the smallest size) are slow. This can be explained by the aggressive
+optimizations that Java performs on code that is run many times. THe HotSpot VM
+will recompile code on-the-fly that it determines to be a bottleneck in order to
+optimize the common case. This explains the discrepancy between the smaller and
+larger runs. To accurately measure performance, it might make sense to run the
+entire experiment once without reporting to warm up the VM, then run it again to
+measure performance.
+
+See: http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136373.html
+
+in particular this quote explains a bit:
+"It includes dynamic compilers that adaptively compile Java bytecodes into
+ optimized machine instructions..."
